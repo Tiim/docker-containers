@@ -1,0 +1,64 @@
+# This docker-compose file is only for reference. 
+# Please customize it to your needs.
+version: '3'
+services:
+  mediawiki:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+
+    ## sqlite only
+    # volumes:
+      # - './sqlite/data:/var/www/data'
+
+    environment:
+      ## sqlite
+        # DB_NAME: wikidb
+        # # DB_PASS:
+        # # DB_SERVER:
+        # DB_TYPE: sqlite
+        # # DB_USER:
+
+      ## postgres
+        # DB_NAME: mediawiki
+        # DB_PASS: mediawiki123
+        # DB_SERVER: postgres
+        # DB_TYPE: postgres
+        # DB_USER: mediawiki
+
+      ## mariadb
+        DB_NAME: mediawiki
+        DB_PASS: mediawiki123
+        DB_SERVER: mariadb
+        DB_TYPE: mysql
+        DB_USER: mediawiki
+
+        HOST: localhost:8080
+        LANG: en
+        PASS: adminadminadmin
+        PROTOCOL: http
+        NAME: Mediawiki
+        ADMIN: admin
+        SECRET_KEY: change-me-lksdjfljsadlfjasklfhhgfiahio4rtifdkjkdhrjkhtieh2849wkf
+
+  ## Postgres container
+  # postgres:
+  #   image: postgres
+  #   environment:
+  #     POSTGRES_USER: mediawiki
+  #     POSTGRES_PASSWORD: mediawiki123
+  #     POSTGRES_DATABASE: mediawiki
+  #   volumes:
+  #     ...
+
+  mariadb:
+
+    image: mariadb
+    environment:
+      MARIADB_USER: mediawiki
+      MARIADB_PASSWORD: mediawiki123
+      MARIADB_DATABASE: mediawiki
+      MARIADB_ROOT_PASSWORD: lkasfjknvkajdhfidkshfiouh
+    # volumes:
+    #   ...
